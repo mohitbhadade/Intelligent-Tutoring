@@ -1,0 +1,31 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+    position: static;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+    margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+    width: auto;
+}
+
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #FFF;
+}
+
+ol li.list-group-item { 
+    list-style: decimal inside;
+    display: list-item;
+}
