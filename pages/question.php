@@ -8,9 +8,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="img/logo_black.png">
-
+    <script src="../scripts/jquery-1.11.2.js"> </script>
     <title>COMPILER TUTORIALS</title>
-
     <!-- Bootstrap core CSS -->
     <link href="../styles/bootstrap.min.css" rel="stylesheet">
     <link href="../styles/bootstrap-theme.min.css" rel="stylesheet">
@@ -32,6 +31,7 @@
   </head>
 
   <body>
+    <script src="../scripts/questionCall.js"></script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -46,6 +46,7 @@
 <a class="navbar-brand"><?php
 echo "Welcome ".$name;?>
 </a>
+
 	</div>
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -57,12 +58,16 @@ echo "Welcome ".$name;?>
 	  </ul>
 	</div><!-- /.navbar-collapse -->
       </div>
-    </nav>
-<?php $grammar = $_POST['input-grammar'];
+    </nav><?php $grammar = $_POST['input-grammar'];
 $filename= "sample.txt";
 file_put_contents("/home/mohitdb/myserver/output/".$filename, $grammar);
 //exec("echo ".$grammar." > ".$filename);
-$que= exec("/home/mohitdb/Downloads/ConsoleProblemGeneration/ConsoleApplication2/bin/Debug/ConsoleApplication2.exe ".basename($filename, ".txt"));
+/*ob_start();
+passthru("/home/mohitdb/Downloads/ConsoleProblemGeneration/ConsoleApplication2/bin/Debug/ConsoleApplication2.exe ".basename($filename,".txt")); 
+$que = ob_get_contents(); 
+ob_end_clean();
+ */
+
 ?>
 <div id="navi">
 
@@ -75,7 +80,10 @@ $que= exec("/home/mohitdb/Downloads/ConsoleProblemGeneration/ConsoleApplication2
 </div>
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
 <h2>Lets Play !</h2>
-<p><?php echo "".$que;?></p>
+<p><?php
+
+
+?></p>
 </div>
  <div class="container">
       <hr/>

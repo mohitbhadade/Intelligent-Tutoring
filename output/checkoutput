@@ -1,0 +1,13 @@
+sample
+
+G -> aA | 
+
+What is FIRST[aA] ?
+
+
+
+aA          
+
+
+
+Success
