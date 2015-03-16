@@ -9,7 +9,19 @@ function escapeHtml(unsafe) {
          .replace(/'/g, "&#039;");
  }
 
+function printcheckedlist(json){
+		var len= json.options.length;
+	        var temp=[];
+		var j=0;
+                for (var i = 0; i < len; i++) {
+			if(document.getElementById(i).checked==true)
+				temp[j++] = document.getElementById(i).value;
+				
+		}	
+var returnjson = {'questionReturned': json.sym, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right};
+getQuestion(returnjson);
 
+}
 
 $(document).ready(function(){
 window.getQuestion=function(sample){
@@ -19,30 +31,25 @@ window.getQuestion=function(sample){
     url: "/question",
  
     // The data to send (will be converted to a query string)
-    data: {
-	anslist :
-	sample
-    },
+    data: JSON.stringify(sample),
  
     // Whether this is a POST or GET request
-    type: "GET",
+    type: "POST",
  
     // The type of data we expect back
-    dataType : "json",
+    contentType : "application/json",
  
     // Code to run if the request succeeds;
     // the response is passed to the function
     success: function( json ) {
         $('#section').html("");
-	$( "<div>" ).html( json.qid ).appendTo( "#section" );
         $( "<div>").html( "<h3>"+json.qcontent+"</h3>" ).appendTo( "#section" );
-        $( "<div>").html( "<h3>Checking the sym value : "+json.sym+"</h3>" ).appendTo( "#section" );
         
 	var len = json.options.length;
                 for (var i = 0; i < len; i++) {
-                    $("<div>").html( "<input type=\"checkbox\" name=\"option\" >"+json.options[i]).appendTo("#section");
+                    $("<div>").html( "<input type=\"checkbox\" id=\""+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
                 }	
-         $("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" onclick=\"getQuestion('"+escapeHtml(json.sym)+"')\">Submit Answer</button>").appendTo("#section");
+         $("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Submit Answer</button>").click(function() {printcheckedlist(json);}).appendTo("#section");
 	
 		//$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
     },
@@ -64,6 +71,6 @@ window.getQuestion=function(sample){
 
 });
 };
-window.getQuestion('check');
+window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':''});
 
 });
