@@ -92,8 +92,6 @@ ob_end_clean();
 
 <p><?php echo"".$grammar?></p>
 <li><a href="#">Play for FIRST</a></li>      
-<li><a href="#">Play for FOLLOW</a></li>      
-
 </div>
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
 <h2>Lets Play !</h2>

@@ -9,7 +9,7 @@ function escapeHtml(unsafe) {
          .replace(/'/g, "&#039;");
  }
 
-function printcheckedlist(json){
+function getCheckedlist(json){
 		var len= json.options.length;
 	        var temp=[];
 		var j=0;
@@ -18,7 +18,7 @@ function printcheckedlist(json){
 				temp[j++] = document.getElementById(i).value;
 				
 		}	
-var returnjson = {'questionReturned': json.sym, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right};
+var returnjson = {'questionReturned': json.qcontent, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym};
 getQuestion(returnjson);
 
 }
@@ -43,15 +43,19 @@ window.getQuestion=function(sample){
     // the response is passed to the function
     success: function( json ) {
         $('#section').html("");
+	if(!json.isItLastQuestion){    
         $( "<div>").html( "<h3>"+json.qcontent+"</h3>" ).appendTo( "#section" );
         
 	var len = json.options.length;
                 for (var i = 0; i < len; i++) {
                     $("<div>").html( "<input type=\"checkbox\" id=\""+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
                 }	
-         $("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Submit Answer</button>").click(function() {printcheckedlist(json);}).appendTo("#section");
+         $("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Submit Answer</button>").click(function() {getCheckedlist(json);}).appendTo("#section");
 	
-		//$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+	}
+	else
+		$("<div>").html("<h3>Quiz Complete</h3>").appendTo("#section");
+	//$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
     },
  
     // Code to run if request fails; the raw request and
@@ -71,6 +75,6 @@ window.getQuestion=function(sample){
 
 });
 };
-window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':''});
+window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':'', 'state':'','sym':''});
 
 });
