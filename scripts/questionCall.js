@@ -44,7 +44,7 @@ window.getQuestion=function(sample){
     success: function( json ) {
         $('#section').html("");
 	if(!json.isItLastQuestion){    
-        $( "<div>").html( "<h3>"+json.qcontent+"</h3>" ).appendTo( "#section" );
+        $( "<div>").html( "<h4><b><em><pre>"+json.qcontent+"</pre></em></b></h4>" ).appendTo( "#section" );
         
 	var len = json.options.length;
                 for (var i = 0; i < len; i++) {
@@ -69,7 +69,7 @@ window.getQuestion=function(sample){
  
     // Code to run regardless of success or failure
     complete: function( xhr, status ) {
-        alert( "The request is complete!" );
+        //alert( "The request is complete!" );
     }
 
 

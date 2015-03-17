@@ -17,6 +17,7 @@ if(!in_array(finfo_file($finfo, $tempFileName), $allowed)){
 $uploaddir=  '/home/mohitdb/myserver/output/';
 $uploadfile = $uploaddir. basename($_FILES['grammar-upload']['name']);
 move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
+//header("location:question.php");
 
 ?>
 <!DOCTYPE html>
@@ -28,6 +29,7 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="img/logo_black.png">
+    <script src="../scripts/jquery-1.11.2.js"> </script>
 
     <title>COMPILER TUTORIALS</title>
 
@@ -52,6 +54,7 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
   </head>
 
   <body>
+    <script src="../scripts/questionCall.js"></script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -79,13 +82,15 @@ echo "Welcome ".$name;?>
       </div>
       </nav>
 <?php $grammar = file_get_contents($uploadfile);
-$filename= $_FILES['grammar-upload']['name'];
-ob_start(); 
+//$filename= $_FILES['grammar-upload']['name'];
+$filename= "sample.txt";
+file_put_contents("/home/mohitdb/myserver/output/".$filename, $grammar);
+/*ob_start(); 
 //passthru("ls");
 passthru("/home/mohitdb/Downloads/ConsoleProblemGeneration/ConsoleApplication2/bin/Debug/ConsoleApplication2.exe ".basename($filename,".txt")); 
 $que = ob_get_contents(); 
 ob_end_clean();
-?>
+ */?>
 <div id="navi">
 
 <h2><p>GRAMMAR</p></h2>
@@ -95,7 +100,7 @@ ob_end_clean();
 </div>
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
 <h2>Lets Play !</h2>
-<p><?php echo "".$que;?></p>
+<!--p></p-->
 </div>
  <div class="container">
       <hr/>

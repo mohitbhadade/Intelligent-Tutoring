@@ -71,9 +71,9 @@ ob_end_clean();
 ?>
 <div id="navi">
 
-<h2><p>GRAMMAR</p></h2>
+<h2><p><em>GRAMMAR</em></p></h2>
 
-<p><?php echo"".$grammar?></p>
+<p><pre><?php echo"".$grammar?></pre></p>
 <li><a href="#">Play for FIRST</a></li>      
 <!--li><a href="#">Play for FOLLOW</a></li-->      
 
