@@ -45,12 +45,19 @@ window.getQuestion=function(sample){
         $('#section').html("");
 	if(!json.isItLastQuestion){    
         $( "<div>").html( "<h4><b><em><pre>"+json.qcontent+"</pre></em></b></h4>" ).appendTo( "#section" );
-        
+        if(json.warning)
+		$("<div>").html("<p><font color=\"red\"><pre>Warning : Whoo, Look again !!</pre></font> </p>").appendTo("#section"); 
 	var len = json.options.length;
-                for (var i = 0; i < len; i++) {
+        if(json.state==1)
+		for (var i = 0; i < len; i++) {
                     $("<div>").html( "<input type=\"checkbox\" id=\""+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
-                }	
-         $("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Submit Answer</button>").click(function() {getCheckedlist(json);}).appendTo("#section");
+                }
+	else 
+		for (var i = 0; i < len; i++) {
+                    $("<div>").html( "<input type=\"radio\" id=\""+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
+                }
+
+         $("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Submit</button>").click(function() {getCheckedlist(json);}).appendTo("#section");
 	
 	}
 	else

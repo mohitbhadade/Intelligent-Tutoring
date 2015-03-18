@@ -43,9 +43,9 @@
             <span class="icon-bar"></span>
 	  </button>
 	  <!--a class="navbar-brand" href="tutorial.html">Welcome</a-->
-<a class="navbar-brand"><?php
-echo "Welcome ".$name;?>
-</a>
+	  <a class="navbar-brand"><?php
+		echo "Welcome ".$name;?>
+	  </a>
 	</div>
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -58,7 +58,7 @@ echo "Welcome ".$name;?>
 	</div><!-- /.navbar-collapse -->
       </div>
     </nav>
-<h3></h3> 
+ 
 <div class="container">
   <div class="container">
     <div class="col-md-4 col-sm-offset-4 well">

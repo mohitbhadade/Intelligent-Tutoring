@@ -91,16 +91,20 @@ passthru("/home/mohitdb/Downloads/ConsoleProblemGeneration/ConsoleApplication2/b
 $que = ob_get_contents(); 
 ob_end_clean();
  */?>
+<div class= "col-md-4">
 <div id="navi">
 
-<h2><p>GRAMMAR</p></h2>
+<h2><p><em>GRAMMAR</em></p></h2>
 
-<p><?php echo"".$grammar?></p>
+<p><pre><?php echo"".$grammar?></pre></p>
 <li><a href="#">Play for FIRST</a></li>      
 </div>
+</div>
+<div class="col-md-8">
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
 <h2>Lets Play !</h2>
 <!--p></p-->
+</div>
 </div>
  <div class="container">
       <hr/>

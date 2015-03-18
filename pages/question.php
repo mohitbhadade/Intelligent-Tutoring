@@ -69,6 +69,7 @@ ob_end_clean();
  */
 
 ?>
+<div class="col-md-4">
 <div id="navi">
 
 <h2><p><em>GRAMMAR</em></p></h2>
@@ -78,12 +79,15 @@ ob_end_clean();
 <!--li><a href="#">Play for FOLLOW</a></li-->      
 
 </div>
+</div>
+<div class="col-md-8">
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
 <h2>Lets Play !</h2>
 <p><?php
 
 
 ?></p>
+</div>
 </div>
  <div class="container">
       <hr/>
