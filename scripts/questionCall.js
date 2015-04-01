@@ -1,4 +1,4 @@
-
+window.ch =1 ;
 
 function escapeHtml(unsafe) {
     return unsafe
@@ -9,16 +9,40 @@ function escapeHtml(unsafe) {
          .replace(/'/g, "&#039;");
  }
 
+function setCh(id){
+window.ch = id;
+}
+
+function changeChoice(id){
+setCh(id);
+firstCall();
+}
+
+function getUname(){
+var uname; 
+$.ajax({
+            type: 'POST',
+            url: 'username.php',
+	    async : false,	                
+            success: function(data){ 
+		uname = data;
+            }
+
+            });
+return uname;
+}
+
 function getCheckedlist(json){
 		var len= json.options.length;
 	        var temp=[];
 		var j=0;
                 for (var i = 0; i < len; i++) {
-			if(document.getElementById(i).checked==true)
-				temp[j++] = document.getElementById(i).value;
+			var cur_id= "ans"+i;
+			if(document.getElementById(cur_id).checked==true)
+				temp[j++] = document.getElementById(cur_id).value;
 				
 		}	
-var returnjson = {'questionReturned': json.qcontent, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym};
+var returnjson = {'questionReturned': json.qcontent, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'ch':json.ch};
 getQuestion(returnjson);
 
 }
@@ -50,11 +74,11 @@ window.getQuestion=function(sample){
 	var len = json.options.length;
         if(json.state==1)
 		for (var i = 0; i < len; i++) {
-                    $("<div>").html( "<input type=\"checkbox\" id=\""+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
+                    $("<div>").html( "<input type=\"checkbox\" id=\"ans"+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
                 }
 	else 
 		for (var i = 0; i < len; i++) {
-                    $("<div>").html( "<input type=\"radio\" id=\""+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
+                    $("<div>").html( "<input type=\"radio\" id=\"ans"+i+"\"name=\"option\" value=\""+json.options[i]+"\" >"+json.options[i]).appendTo("#section");
                 }
 
          $("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Submit</button>").click(function() {getCheckedlist(json);}).appendTo("#section");
@@ -82,6 +106,6 @@ window.getQuestion=function(sample){
 
 });
 };
-window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':'', 'state':'','sym':''});
-
+window.firstCall= function() {window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':'', 'state':'','sym':'', 'uname':getUname(), 'ch': window.ch});}
+firstCall();
 });

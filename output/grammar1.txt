@@ -1,5 +1,0 @@
-E -> T L
-L -> + T L | epsilon
-T -> F M
-M -> * F M | epsilon
-F -> ( E ) | id

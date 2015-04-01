@@ -82,8 +82,8 @@ echo "Welcome ".$name;?>
       </div>
       </nav>
 <?php $grammar = file_get_contents($uploadfile);
-//$filename= $_FILES['grammar-upload']['name'];
-$filename= "sample.txt";
+//$filename= $_FILEoS['grammar-upload']['name'];
+$filename= $name."grammar.txt";
 file_put_contents("/home/mohitdb/myserver/output/".$filename, $grammar);
 /*ob_start(); 
 //passthru("ls");
@@ -97,7 +97,14 @@ ob_end_clean();
 <h2><p><em>GRAMMAR</em></p></h2>
 
 <p><pre><?php echo"".$grammar?></pre></p>
-<li><a href="#">Play for FIRST</a></li>      
+<ul>
+<li id="1" onclick="changeChoice(this.id)"><a href="#">Play for FIRST</a></li>      
+<li id="2" onClick="changeChoice(this.id)"><a href="#">Play for FOLLOW</a></li>      
+<li id="LLP"><a href="#">Play for LL Parsing Tables</a></li>      
+<li id="LLM"><a href="#">Play for LL Parsing Moves</a></li>      
+<li id="SLRC"><a href="#">Play for SLR Canonical Set</a></li>      
+<li id="SLRP"><a href="#">Play for SLR Parsing Table</a></li>      
+</ul>
 </div>
 </div>
 <div class="col-md-8">
