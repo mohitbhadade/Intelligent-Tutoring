@@ -30,6 +30,7 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
     <meta name="author" content="">
     <link rel="icon" href="img/logo_black.png">
     <script src="../scripts/jquery-1.11.2.js"> </script>
+    <script src="../scripts/toastr.min.js"> </script>
 
     <title>COMPILER TUTORIALS</title>
 
@@ -38,6 +39,9 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
     <link href="../styles/bootstrap-theme.min.css" rel="stylesheet">
     <link href="../styles/theme.css" rel="stylesheet">    
     <link href="../styles/questionstyle.css" rel="stylesheet">
+    <link href="../styles/toastr.min.css" rel="stylesheet">
+    <link href="../styles/tablestyle.css" rel="stylesheet">
+    <link href="../styles/statictable.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <!--link href="css/jumbotron.css" rel="stylesheet"-->
@@ -60,22 +64,22 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
       <div class="container">
 	<div class="navbar-header">
 	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+	    <span class="sr-only">Toggle navigation</span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
 	  </button>
 	  <!--a class="navbar-brand" href="tutorial.html">Welcome</a-->
-<a class="navbar-brand"><?php
+	  <a class="navbar-brand"><?php
 echo "Welcome ".$name;?>
 </a>
 	</div>
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	  <ul class="nav navbar-nav navbar-right">
-            <li><a href="homepage.php">Home</a></li>      
-            <li><a href="tutorial.php">Tutorial</a></li>
-            <li><a href="signout.php">Signout</a></li>
+	    <li><a href="homepage.php">Home</a></li>      
+	    <li><a href="tutorial.php">Tutorial</a></li>
+	    <li><a href="signout.php">Signout</a></li>
 
 	  </ul>
 	</div><!-- /.navbar-collapse -->
@@ -91,7 +95,16 @@ passthru("/home/mohitdb/Downloads/ConsoleProblemGeneration/ConsoleApplication2/b
 $que = ob_get_contents(); 
 ob_end_clean();
  */?>
-<div class= "col-md-4">
+<div id="tablediv">
+<table class="table1" id="tablemain" >
+                <tbody id="tablebody">
+                </tbody>
+            </table>
+</div>
+
+
+<div class='error' style="display:none"></div>
+<div class= "col-md-3">
 <div id="navi">
 
 <h2><p><em>GRAMMAR</em></p></h2>
@@ -100,27 +113,30 @@ ob_end_clean();
 <ul>
 <li id="1" onclick="changeChoice(this.id)"><a href="#">Play for FIRST</a></li>      
 <li id="2" onClick="changeChoice(this.id)"><a href="#">Play for FOLLOW</a></li>      
-<li id="LLP"><a href="#">Play for LL Parsing Tables</a></li>      
-<li id="LLM"><a href="#">Play for LL Parsing Moves</a></li>      
-<li id="SLRC"><a href="#">Play for SLR Canonical Set</a></li>      
-<li id="SLRP"><a href="#">Play for SLR Parsing Table</a></li>      
+<li id="3" onclick="changeChoice(this.id)"><a href="#">Play for LL Parsing Tables-Level 1</a></li>      
+<li id="11" onclick="changeChoice(this.id)"><a href="#">Play for LL Parsing Tables-Level 2</a></li>      
+<li id="4"><a href="#">Play for LL Parsing Moves</a></li>      
+<li id="5"><a href="#">Play for SLR Canonical Set</a></li>      
+<li id="6"><a href="#">Play for SLR Parsing Table</a></li>      
 </ul>
 </div>
 </div>
-<div class="col-md-8">
+<div class="col-md-6">
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
-<h2>Lets Play !</h2>
-<!--p></p-->
 </div>
 </div>
- <div class="container">
+<div class= "col-md-3">
+<div id="naviright">
+</div>
+</div>
+ <div class="col-md-12">
       <hr/>
       <footer class="text-center">
 	<p>Department of Computer Science and Engineering, IIT Kanpur</p>
       </footer>
     </div>
-    
-    
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

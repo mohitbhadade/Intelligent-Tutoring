@@ -15,6 +15,8 @@
     <link href="../styles/bootstrap-theme.min.css" rel="stylesheet">
     <link href="../styles/theme.css" rel="stylesheet">    
     <link href="../styles/questionstyle.css" rel="stylesheet">
+    <link href="../styles/toastr.min.css" rel="stylesheet">
+    <link href="../styles/tablestyle.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <!--link href="css/jumbotron.css" rel="stylesheet"-->
@@ -37,13 +39,13 @@
       <div class="container">
 	<div class="navbar-header">
 	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+	    <span class="sr-only">Toggle navigation</span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
 	  </button>
 	  <!--a class="navbar-brand" href="tutorial.html">Welcome</a-->
-<a class="navbar-brand"><?php
+	  <a class="navbar-brand"><?php
 echo "Welcome ".$name;?>
 </a>
 
@@ -51,14 +53,14 @@ echo "Welcome ".$name;?>
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	  <ul class="nav navbar-nav navbar-right">
-            <li><a href="homepage.php">Home</a></li>      
-            <li><a href="tutorial.php">Tutorial</a></li>
-            <li><a href="signout.php">Signout</a></li>
+	    <li><a href="homepage.php">Home</a></li>      
+	    <li><a href="tutorial.php">Tutorial</a></li>
+	    <li><a href="signout.php">Signout</a></li>
 
 	  </ul>
 	</div><!-- /.navbar-collapse -->
       </div>
-    </nav><?php $grammar = $_POST['input-grammar'];
+      </nav><?php $grammar = $_POST['input-grammar'];
 $filename= $name."grammar.txt";
 file_put_contents("/home/mohitdb/myserver/output/".$filename, $grammar);
 //exec("echo ".$grammar." > ".$filename);
@@ -69,7 +71,7 @@ ob_end_clean();
  */
 
 ?>
-<div class="col-md-4">
+<div class="col-md-3">
 <div id="navi">
 
 <h2><p><em>GRAMMAR</em></p></h2>
@@ -84,23 +86,88 @@ ob_end_clean();
 
 </div>
 </div>
-<div class="col-md-8">
+<div class="col-md-6">
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
-<h2>Lets Play !</h2>
-<p><?php
-
-
-?></p>
+<div id="tablediv">
+<table class="table1">
+		<thead>
+		    <tr>
+			<th></th>
+			<th scope="col" abbr="Starter">Smart Starter</th>
+			<th scope="col" abbr="Medium">Smart Medium</th>
+			<th scope="col" abbr="Business">Smart Business</th>
+			<th scope="col" abbr="Deluxe">Smart Deluxe</th>
+		    </tr>
+		</thead>
+		<tfoot>
+		    <tr>
+			<th scope="row">Price per month</th>
+			<td>$ 2.90</td>
+			<td>$ 5.90</td>
+			<td>$ 9.90</td>
+			<td>$ 14.90</td>
+		    </tr>
+		</tfoot>
+		<tbody>
+		    <tr>
+			<th scope="row">Storage Space</th>
+			<td>512 MB</td>
+			<td>1 GB</td>
+			<td>2 GB</td>
+			<td>4 GB</td>
+		    </tr>
+		    <tr>
+			<th scope="row">Bandwidth</th>
+			<td>50 GB</td>
+			<td>100 GB</td>
+			<td>150 GB</td>
+			<td>Unlimited</td>
+		    </tr>
+		    <tr>
+			<th scope="row">MySQL Databases</th>
+			<td>Unlimited</td>
+			<td>Unlimited</td>
+			<td>Unlimited</td>
+			<td>Unlimited</td>
+		    </tr>
+		    <tr>
+			<th scope="row">Setup</th>
+			<td>19.90 $</td>
+			<td>12.90 $</td>
+			<td>free</td>
+			<td>free</td>
+		    </tr>
+		    <tr>
+			<th scope="row">PHP 5</th>
+			<td><span class="check"></span></td>
+			<td><span class="check"></span></td>
+			<td><span class="check"></span></td>
+			<td><span class="check"></span></td>
+		    </tr>
+		    <tr>
+			<th scope="row">Ruby on Rails</th>
+			<td><span class="check"></span></td>
+			<td><span class="check"></span></td>
+			<td><span class="check"></span></td>
+			<td><span class="check"></span></td>
+		    </tr>
+		</tbody>
+	    </table>
 </div>
 </div>
- <div class="container">
+</div>
+<div class= "col-md-3">
+<div id="naviright">
+</div>
+</div>
+ <div class="col-md-12">
       <hr/>
       <footer class="text-center">
 	<p>Department of Computer Science and Engineering, IIT Kanpur</p>
       </footer>
     </div>
-    
-    
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
