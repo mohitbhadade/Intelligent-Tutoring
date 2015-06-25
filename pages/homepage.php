@@ -48,12 +48,39 @@
 	</div>
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	  <ul class="nav navbar-nav navbar-right">
+<!--?php 
+	echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">'
+	if(strcmp($name,"admin"))
+		echo' <ul class="nav navbar-nav navbar-right">'
+           echo ' <li><a href="homepage.php">Home</a></li>'      
+           echo' <li><a href="tutorial.php">Tutorial</a></li>'
+	   echo' <li><a href="signout.php">Signout</a></li>'
+	   echo' <li><a href="#">Account Manager</a></li>'
+
+	    echo '</ul>'
+	else 
+	  echo '<ul class="nav navbar-nav navbar-right">'
+            echo '<li><a href="homepage.php">Home</a></li> '     
+            echo '<li><a href="tutorial.php">Tutorial</a></li>'
+            echo '<li><a href="signout.php">Signout</a></li>'
+	  echo '</ul>'
+	echo'</div>'
+
+?-->
+<ul class="nav navbar-nav navbar-right">
             <li><a href="homepage.php">Home</a></li>      
             <li><a href="tutorial.php">Tutorial</a></li>
-            <li><a href="signout.php">Signout</a></li>
+	    <li><a href="signout.php">Signout</a></li>
+	    <li>
+                <a href="#">Account<span class="arrow" class="dropdown-menu">&#9660;</span></a>
+ 
+                <ul class="dropdown-menu">
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Add Student</a></li>
+                </ul>
+            </li>
 
-	  </ul>
+</ul>
 	</div><!-- /.navbar-collapse -->
       </div>
     </nav>

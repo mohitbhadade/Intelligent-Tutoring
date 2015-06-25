@@ -1,8 +1,6 @@
 <?php
 include("session_check.php");
 
-$tempFileName= $_FILES['grammar-upload']['tmp_name'];
-
 $allowed = array('inode/x-empty', 'text/plain');
 //check file information/type
 $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
@@ -14,8 +12,8 @@ if(!in_array(finfo_file($finfo, $tempFileName), $allowed)){
 }
 
 
-$uploaddir=  '/home/mohitdb/myserver/output/';
-$uploadfile = $uploaddir. basename($_FILES['grammar-upload']['name']);
+$uploaddir=  '/home/mohitdb/myserver/output/';//.$name.'/';
+$uploadfile = $uploaddir.$name.basename($_FILES['grammar-upload']['name']);
 move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
 //header("location:question.php");
 
@@ -31,6 +29,8 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
     <link rel="icon" href="img/logo_black.png">
     <script src="../scripts/jquery-1.11.2.js"> </script>
     <script src="../scripts/toastr.min.js"> </script>
+    <script src="../scripts/bootstrap.min.js"> </script>
+    <script src="../scripts/bootstrap.js"> </script>
 
     <title>COMPILER TUTORIALS</title>
 
@@ -87,7 +87,8 @@ echo "Welcome ".$name;?>
       </nav>
 <?php $grammar = file_get_contents($uploadfile);
 //$filename= $_FILEoS['grammar-upload']['name'];
-$filename= $name."grammar.txt";
+$filename= $name.basename($_FILES['grammar-upload']['name']);
+$_SESSION['filename']= $filename;
 file_put_contents("/home/mohitdb/myserver/output/".$filename, $grammar);
 /*ob_start(); 
 //passthru("ls");
@@ -95,13 +96,57 @@ passthru("/home/mohitdb/Downloads/ConsoleProblemGeneration/ConsoleApplication2/b
 $que = ob_get_contents(); 
 ob_end_clean();
  */?>
+
+<!--div class="panel-group" id="accordion">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+	<a data-toggle="collapse" data-parent="#accordion" 
+	  href="#collapseOne">
+	  Click me to exapand/collapse.Section 1
+	</a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse">
+      <div class="panel-body" style="color:black">
+      1st expanded</div>
+    </div>
+  </div>
+</div-->
+
+<!-- Button to trigger modal -->
+
 <div id="tablediv">
 <table class="table1" id="tablemain" >
-                <tbody id="tablebody">
-                </tbody>
-            </table>
+		<tbody id="tablebody">
+		</tbody>
+	    </table>
 </div>
 
+<div id="statictablediv">
+<table class="table-fill">
+<tbody class="table-hover" id="statictablebody">
+
+<!--tr>
+<th class="statictable" class="text-left">Month</th>
+<th class="statictable" class="text-left">Sales</th>
+</tr>
+
+<tr class="statictable">
+<td class="statictable" class="text-left">January</td>
+<td class="statictable" class="text-left">$ 50,000.00</td>
+</tr>
+<tr class="statictable">
+<td class="statictable" class="text-left">February</td>
+<td class="statictable" class="text-left">$ 10,000.00</td>
+</tr>
+<tr class="statictable">
+<td class="statictable" class="text-left">March</td>
+<td class="statictable" class="text-left">$ 85,000.00</td>
+</tr-->
+</tbody>
+</table>
+</div>
 
 <div class='error' style="display:none"></div>
 <div class= "col-md-3">
@@ -111,18 +156,31 @@ ob_end_clean();
 
 <p><pre><?php echo"".$grammar?></pre></p>
 <ul>
-<li id="1" onclick="changeChoice(this.id)"><a href="#">Play for FIRST</a></li>      
-<li id="2" onClick="changeChoice(this.id)"><a href="#">Play for FOLLOW</a></li>      
-<li id="3" onclick="changeChoice(this.id)"><a href="#">Play for LL Parsing Tables-Level 1</a></li>      
-<li id="11" onclick="changeChoice(this.id)"><a href="#">Play for LL Parsing Tables-Level 2</a></li>      
-<li id="4"><a href="#">Play for LL Parsing Moves</a></li>      
-<li id="5"><a href="#">Play for SLR Canonical Set</a></li>      
-<li id="6"><a href="#">Play for SLR Parsing Table</a></li>      
+<li id="1" onclick="changeChoice(this.id)"><a style="color:PowderBlue" href="#">Play for FIRST</a></li>      
+<li id="2" onClick="changeChoice(this.id)"><a style="color:PowderBlue" href="#">Play for FOLLOW</a></li>      
+<li id="3" onclick="changeChoice(this.id)"><a style="color:PowderBlue" href="#">Play for LL Parsing Tables-Level 1</a></li>      
+<li id="9" onclick="changeChoice(this.id)"><a style="color:PowderBlue" href="#">Play for LL Parsing Tables-Level 2</a></li>      
+<li id="4" onclick="changeChoice(this.id)"><a style="color:PowderBlue" href="#">Play for LL Parsing Moves</a></li>      
+<li id="5"><a href="#">Play for SLR Canonical Set-CLOSURE</a></li>
+<li id="10"><a href="#">Play for SLR Canonical Set-GOTO</a></li>
+
+<li id="6"><a href="#">Play for SLR Parsing Table</a></li>
+<li id="7"><a href="#">Play for SLR Parsing Moves</a></li>
+
 </ul>
+
+
+
+
 </div>
 </div>
+
+
 <div class="col-md-6">
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
+
+
+
 </div>
 </div>
 <div class= "col-md-3">

@@ -1,31 +1,96 @@
-<style>
+
 #header {
-    background-color:black;
-    color:white;
-    text-align:center;
-    padding:5px;
+	background-color:black;
+	color:white;
+	text-align:center;
+	padding:5px;
 }
 #navi {
-    line-height:30px;
-    background-color:#363B36;
-    color:white;
-    height:700px;
-    width:500px;
-    float:left;
-    margin:20px;
-    padding:20px;	      
+	line-height:30px;
+	background-color:#363B36;
+	color:white;
+	height:750px;
+	margin:20px;
+	padding:20px;	      
+}
+#naviright {
+	line-height:30px;
+	background-color:#363B36;
+	color:white;
+	height:750px;
+	margin:20px;
+	padding:20px;	      
+
 }
 #section {
-    width:900px;
-    float:left;
-    height:700px;
-    padding:10px;	 	 
+	height:750px;
+	padding:10px;	 	 
+	overflow: auto;
 }
 #footer {
-    background-color:black;
-    color:white;
-    clear:both;
-    text-align:center;
-   padding:5px;	 	 
+	background-color:black;
+	color:white;
+	clear:both;
+	text-align:center;
+	padding:5px;	 	 
 }
-</style>
+#divans0{
+	padding-left:0;
+	
+}
+#divans4{
+	padding-left:0;
+}
+#divans8{
+	padding-left:0;
+}
+#divans12{
+	padding-left:0;
+}
+#divans16{
+	padding-left:0;
+}
+#tablediv{
+	display: block;
+	padding-bottom:1em;
+}
+#statictablediv{
+	display: block;
+	padding-bottom:1em;
+
+}
+.error {
+
+	width:200px;
+	height:20px;
+	color:orange;
+}
+.thigh{
+    padding:15px;
+    color:#fff;
+    text-shadow:1px 1px 1px #568F23;
+    border:1px solid #93CE37;
+    border-bottom:3px solid #9ED929;
+    background-color:#8A2BE2; /*9DD929*/
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(47,79,79)),
+        color-stop(0.51, rgb(128,128,128)),
+        color-stop(0.87, rgb(128,128,128))
+        );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(47,79,79) 2%, 
+        rgb(128,128,128) 51%,
+        rgb(128,128,128) 87%
+        );
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius:5px 5px 0px 0px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+
+}
+
