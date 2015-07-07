@@ -1,5 +1,8 @@
+<?php include("../session_check.php");
+if($_SESSION['role']!="admin")
+	header('location: /pages/index.php');
+?>
 <!DOCTYPE html>
-<?php include("session_check.php");?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -12,11 +15,12 @@
     <title>COMPILER TUTORIALS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../styles/bootstrap.min.css" rel="stylesheet">
-    <link href="../styles/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="../styles/theme.css" rel="stylesheet">    
     <script src="/scripts/jquery-1.11.2.js"> </script>
     <script src="/scripts/bootstrap.min.js"></script>
+
+    <link href="/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="/styles/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/styles/theme.css" rel="stylesheet">    
 
     <!-- Custom styles for this template -->
     <!--link href="css/jumbotron.css" rel="stylesheet"-->
@@ -38,10 +42,10 @@
       <div class="container">
 	<div class="navbar-header">
 	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+	    <span class="sr-only">Toggle navigation</span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
 	  </button>
 	  <!--a class="navbar-brand" href="tutorial.html">Welcome</a-->
 	  <a class="navbar-brand">
@@ -54,24 +58,25 @@
 	echo '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">'
 	if(strcmp($name,"admin"))
 		echo' <ul class="nav navbar-nav navbar-right">'
-           echo ' <li><a href="homepage.php">Home</a></li>'      
-           echo' <li><a href="tutorial.php">Tutorial</a></li>'
+	   echo ' <li><a href="homepage.php">Home</a></li>'      
+	   echo' <li><a href="tutorial.php">Tutorial</a></li>'
 	   echo' <li><a href="signout.php">Signout</a></li>'
 	   echo' <li><a href="#">Account Manager</a></li>'
 
 	    echo '</ul>'
 	else 
 	  echo '<ul class="nav navbar-nav navbar-right">'
-            echo '<li><a href="homepage.php">Home</a></li> '     
-            echo '<li><a href="tutorial.php">Tutorial</a></li>'
-            echo '<li><a href="signout.php">Signout</a></li>'
+	    echo '<li><a href="homepage.php">Home</a></li> '     
+	    echo '<li><a href="tutorial.php">Tutorial</a></li>'
+	    echo '<li><a href="signout.php">Signout</a></li>'
 	  echo '</ul>'
 	echo'</div>'
 
 ?-->
 <ul class="nav navbar-nav navbar-right">
-            <li><a href="homepage.php">Home</a></li>      
-            <li><a href="tutorial.php">Tutorial</a></li>
+	    <li><a href="index.php">Home</a></li>      
+	    <li><a href="tutorial.php">Tutorial</a></li>
+
 <li class="dropdown">
   <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
     Account
@@ -79,12 +84,14 @@
   </a>
 
   <ul class="dropdown-menu" aria-labelledby="dLabel">
-		    <!--li><a href="#">Profile</a></li-->
+		    <li><a href="profile.php">Profile</a></li>
+		    <li><a href="account.php">Account Manager</a></li>
 		    <li><a href="updatepass.php">Security</a></li>
 		    <li><a href="signout.php">Signout</a></li>
 
   </ul>
 </li>
+
 
 </ul>
 	</div><!-- /.navbar-collapse -->
@@ -104,52 +111,52 @@
   <div class="col-md-4">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">Instructor</h3>
+	<h3 class="panel-title">Instructor</h3>
       </div>
       <div class="panel-body">
-        <strong>Prof. Amey Karkare</strong>
-        <p>Room RM</p>
-        <p><a href="mailto:karkare@cse.iitk.ac.in">karkare@cse.iitk.ac.in</a></p>      
+	<strong>Prof. Amey Karkare</strong>
+	<p>Room RM</p>
+	<p><a href="mailto:karkare@cse.iitk.ac.in">karkare@cse.iitk.ac.in</a></p>      
       </div>
     </div>
   </div>
   <div class="col-md-4">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">Lecture Schedule</h3>
+	<h3 class="panel-title">Lecture Schedule</h3>
       </div>
       <div class="panel-body">
-        <strong></strong>
-        <p>Room KD101</p>
+	<strong></strong>
+	<p>Room KD101</p>
       </div>
     </div>
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">Site Authors</h3>
+	<h3 class="panel-title">Site Authors</h3>
       </div>
       <div class="panel-body">
-        <strong>Mohit Bhadade</strong>
-        <p><a href="mailto:mohitdb@cse.iitk.ac.in">mohitdb@cse.iitk.ac.in</a></p>
-        <hr>
-        <strong>Nimisha Agrawal</strong>
-        <p><a href="mailto:nimisha@cse.iitk.ac.in">nimisha@cse.iitk.ac.in</a></p>
-        <hr>
-        <!--strong>All Students and Prof.</strong>
-        <p><a href="mailto:cs618st@cse.iitk.ac.in">cs618st@cse.iitk.ac.in</a></p-->
+	<strong>Mohit Bhadade</strong>
+	<p><a href="mailto:mohitdb@cse.iitk.ac.in">mohitdb@cse.iitk.ac.in</a></p>
+	<hr>
+	<strong>Nimisha Agrawal</strong>
+	<p><a href="mailto:nimisha@cse.iitk.ac.in">nimisha@cse.iitk.ac.in</a></p>
+	<hr>
+	<!--strong>All Students and Prof.</strong>
+	<p><a href="mailto:cs618st@cse.iitk.ac.in">cs618st@cse.iitk.ac.in</a></p-->
       </div>    
     </div>
   </div>
   <div class="col-md-4">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">Course TAs</h3>
+	<h3 class="panel-title">Course TAs</h3>
       </div>
       <div class="panel-body">
-                        <strong>TA 1</strong>
-        <p><a href="mailto:">ta1@cse.iitk.ac.in</a></p>
-        <hr/>                <strong>TA 2</strong>
-        <p><a href="mailto:">ta2@cse.iitk.ac.in</a></p>
-                      </div>    
+			<strong>TA 1</strong>
+	<p><a href="mailto:">ta1@cse.iitk.ac.in</a></p>
+	<hr/>                <strong>TA 2</strong>
+	<p><a href="mailto:">ta2@cse.iitk.ac.in</a></p>
+		      </div>    
     </div>
   </div>
 </div>
@@ -160,8 +167,8 @@
 	<p>Department of Computer Science and Engineering, IIT Kanpur</p>
       </footer>
     </div>
-    
-    
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -171,5 +178,6 @@
     <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
   </body>
 </html>
+
 
 

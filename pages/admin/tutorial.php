@@ -11,13 +11,13 @@
     <link rel="icon" href="img/logo_black.png">
 
     <title>COMPILER TUTORIALS</title>
+    <script src="/scripts/jquery-1.11.2.js"> </script>
+    <script src="/scripts/bootstrap.min.js"> </script>
 
     <!-- Bootstrap core CSS -->
-    <link href="../styles/bootstrap.min.css" rel="stylesheet">
-    <link href="../styles/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="../styles/theme.css" rel="stylesheet">    
-    <script src="/scripts/jquery-1.11.2.js"> </script>
-    <script src="/scripts/bootstrap.min.js"></script>
+    <link href="/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="/styles/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/styles/theme.css" rel="stylesheet">    
 
     <!-- Custom styles for this template -->
     <!--link href="css/jumbotron.css" rel="stylesheet"-->
@@ -52,7 +52,7 @@
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	  <ul class="nav navbar-nav navbar-right">
-            <li><a href="homepage.php">Home</a></li>      
+            <li><a href="index.php">Home</a></li>      
             <li><a href="tutorial.php">Tutorial</a></li>
 <li class="dropdown">
   <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -61,13 +61,13 @@
   </a>
 
   <ul class="dropdown-menu" aria-labelledby="dLabel">
-		    <!--li><a href="#">Profile</a></li-->
+		    <li><a href="profile.php">Profile</a></li>
+		    <li><a href="account.php">Account Manager</a></li>
 		    <li><a href="updatepass.php">Security</a></li>
 		    <li><a href="signout.php">Signout</a></li>
 
   </ul>
 </li>
-
 
 	  </ul>
 	</div><!-- /.navbar-collapse -->
@@ -90,52 +90,29 @@
       </form>
 	<h2><center>OR</center></h2-->
       
-	<form enctype="multipart/form-data" action="upload-grammar.php" method="POST" class="form-horizontal">
+	<form enctype="multipart/form-data" action="adminuploadgrammar.php" method="POST" class="form-horizontal">
 	<div class="form-group">
 	  <label for="upload" class="col-md-4 control-label">Upload File&nbsp</label>
 	  <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
           <input type="file"  name="grammar-upload" class="col-md-8">
 	  <p class="help-block col-md-8 col-md-offset-4">Allowed file types: <strong>.txt</strong></p>
-<?php  
-		if(isset($_SESSION['Err'])){
-			echo '<p style="color:red" class="help-block col-md-8 col-md-offset-4">'.$_SESSION['Err'].'</p>';
-			unset($_SESSION['Err']);
-		} 
-		if(isset($_GET['invalid'])){
-			echo '<p style="color:red" class="help-block col-md-8 col-md-offset-4">'.$_GET['invalid'].'</p>';
-			unset($_GET['invalid']);
-		} 
-
-?>
+<?php  if(isset($_POST['Err'])){echo 'Check <br>'.$_POST['Err'];unset($_POST['Err']);} ?>
         </div>
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Upload</button>
         </div>
       </form>
-	<h2><center>OR</center></h2>
 
 
-      <form id="admin-grammar-input-form" action="adminuploadfromlist.php" method="POST" class="form-horizontal">
+      <!--form id="admin-grammar-input-form" action="adminuploadfromlist.php" method="POST" class="form-horizontal">
         <div class="form-group">
           <label for="selectgrammar" class="col-md-4 control-label">Select Grammar &nbsp</label>
           <div class="col-md-8">
 <select name="selectedfile">
-  <!--option value="volvo">admin 1</option>
-  <option value="admingrammar1.txt">admin< 2/option>
-  <option value="mercedes">admin 3</option>
-  <option value="audi">admin 4</option-->
-  <?php  
-		$list = dir("../output/admin");	
-		$list->read();
-		$list->read();	
-		$i=1;
-		while(false !==($entry=$list->read()) ){
-		echo '<option value="'.$entry.'">'.$entry.' - Admin File '.$i.'</option>';
-		$i++;	
-	}$list->close();	
-	//}
-	?>
-
+  <option value="volvo">Volvo</option>
+  <option value="admingrammar1.txt">admin</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
 </select>
 
 	</div>
@@ -143,7 +120,7 @@
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Use</button>
         </div>
-      </form>
+      </form-->
 
 
     </div>

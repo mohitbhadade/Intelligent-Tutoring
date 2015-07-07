@@ -23,21 +23,35 @@ function printTable(json){
 	//		var arr= [["A","i12","1GB","0","0","0","0","0","0"],["B","20","100","0","0","0","0","0","0"],["C","30","40","0","0","0","0","0","0"]];
 	var arr= json.printedlltable;
 	var row= $('<tr>');
-	row.append($('<th>').html("<pre>LL Parsing\nTable</pre>"));	
+	row.append($('<th>').html("<pre>Parsing\nTable</pre>"));	
 	if(json.keys)
 		for (i=0; i<json.keys.length; i++){
 			row.append($('<th>').html(json.keys[i]));
 		}
+	if(json.symbols){
+		var index=[];
+		for(var x in json.symbols)
+			index.push({'key':json.symbols[x],'value':x});
+		index.sort(function(a,b){
+			return a['key']==b['key']?0 : (a['key']>b['key']? 1: -1);			
+		});
+		
+		for (i=0; i<index.length; i++){
+			row.append($('<th>').html(index[i].value));
+		}
+
+	}
 
 	table.append(row);
 	for(i in arr){
 		var rowdata= arr[i];
 		var index=0;
 
-		for(k=0;k< json.keys.length;k++){
-			if(json.tablecol == json.keys[k])
-				index=k;
-		}
+		if(json.keys)
+			for(k=0;k< json.keys.length;k++){
+				if(json.tablecol == json.keys[k])
+					index=k;
+			}
 
 
 
@@ -54,7 +68,11 @@ function printTable(json){
 					row.append($('<td>').html(""));
 
 			else
-				row.append($('<td>').html(i+" -> "+rowdata[j]));	
+				if(json.ch==3 || json.ch==4 || json.ch==9)
+				row.append($('<td>').html(i+" -> "+rowdata[j]));
+				else
+				row.append($('<td>').html(rowdata[j]));
+
 
 		}
 		table.append(row);
@@ -88,7 +106,7 @@ function printStatictable(json){
 		}
 	}
 
-	if(json.ch==4 && json.state==1){
+	if((json.ch==4 || json.ch==7)&& json.state==1){
 
 		if(json.multipopflag==1)
 			window.permanentMovesstk = json.movesstk;
@@ -108,10 +126,16 @@ function printStatictable(json){
 		}
 
 		json.nextmoveindex+=1;
-		arr1[j]=["","",""];
+		if(json.ch==4)
+			arr1[j]=["","",""];
+		else
+			arr1[j]=["",""];
 		var row1= $('<tr>');
-
-		var headarr=["Stack","Input String","Output"];
+		var headarr=[];
+		if(json.ch==4)
+			headarr=["Stack","Input String","Output"];
+		else
+			headarr=["stack","Input String"];
 		for(i in headarr)
 			row1.append($('<th class=\"statictable\" class=\"text-left\">').html(headarr[i]));	
 
@@ -142,7 +166,7 @@ function printStatictable(json){
 }
 
 function changeChoice(id){
-	if(id==4){
+	if(id==4 || id==7){
 		window.inputstring = prompt("Enter a 'SPACE SEPARATED' string for parsing", "");
 		if(window.inputstring==null)
 		{
@@ -171,11 +195,14 @@ function submitDraggedOptions(json){
 	//	alert("tempcount"+tempcount);
 	var highlightedCells = $('#highlightedrow td');	
 
-	if(json.ch==4){
-		if(window.rowstringcount!=3){
+	if(json.ch==4 || json.ch==7){
+		
+		if(json.ch==4 && window.rowstringcount!=3)
 			alert("Please fill all the entries before you submit");
 
-		}
+		else if (json.ch==7 && window.rowstringcount!=2)
+			alert("Please fill all the entries before you submit");
+
 		else{
 			window.rowstringcount=0;
 			highlightedCells.each(function(i,elem) {
@@ -183,14 +210,14 @@ function submitDraggedOptions(json){
 			});
 
 			window.rowstring= $.trim(window.rowstring);
-			var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk/*,'userdefinedlltable':json.userdefinedlltable*/};
+			var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk/*,'userdefinedlltable':json.userdefinedlltable*/};
 			window.rowstring="";
 			getQuestion(returnjson);
 		}
 	}
 	else{
 
-		var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk/*,'userdefinedlltable':json.userdefinedlltable*/};
+		var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk/*,'userdefinedlltable':json.userdefinedlltable*/};
 		getQuestion(returnjson);
 
 	}
@@ -223,20 +250,7 @@ function drop(ev) {
 function allowDrop(ev) {
 	ev.preventDefault();
 }
-function getUname(){
-	var uname; 
-	$.ajax({
-		type: 'POST',
-		url: 'username.php',
-		async : false,	                
-		success: function(data){ 
-			uname = data;
-		}
-
-	});
-	return uname;
-}
-/*function getFname(){
+function getFname(){
 	var fname; 
 	$.ajax({
 		type: 'POST',
@@ -248,7 +262,22 @@ function getUname(){
 
 	});
 	return fname;
-}*/
+}
+function getDname(){
+	var dname; 
+	$.ajax({
+		type: 'POST',
+		url: 'dirname.php',
+		async : false,	                
+		success: function(data){ 
+			dname = data;
+		}
+
+	});
+
+	dname = dname.replace('\n',"");
+	return dname;
+}
 
 
 function getCheckedlist(json){
@@ -261,12 +290,18 @@ function getCheckedlist(json){
 			temp[j++] = document.getElementById(cur_id).value;
 
 	}	
-	var returnjson = {'questionReturned': json.qcontent, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset,'tableanswer':[],'tablerow':json.tablerow, 'tablecol':json.tablecol,'inputstring':json.inputstring,'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk};
+	var returnjson = {'questionReturned': json.qcontent, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname, 'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset,'tableanswer':[],'tablerow':json.tablerow, 'tablecol':json.tablecol,'inputstring':json.inputstring,'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk};
 	getQuestion(returnjson);
 
 }
 
 $(document).ready(function(){
+	$(document).ajaxStart(function(){
+		$("#loader").css("display","block");
+	});
+	$(document).ajaxComplete(function(){
+		$("#loader").css("display","none");
+	});
 	toastr.options = {
 		"closeButton": false,
 "debug": false,
@@ -304,20 +339,30 @@ $(document).ready(function(){
 			success: function( json ) {
 				$('#section').html("");
 				$(document.getElementById('naviright')).hide();
-
-				if(!json.isItLastQuestion){    
-					if(json.warning){
+				if(!json.valid)
+					window.location=('/pages/tutorial.php?invalid=Please upload a valid grammar !!');
+				if(json.leftrecursive && (json.ch==3 || json.ch==9 || json.ch==4))
+					toastr["info"]("Your grammar is left recursive. Cannot generate quiz for that link. Please navigate to some other link");
+					
+				else if(!json.isItLastQuestion){    
+					if(json.warning)
 						toastr["warning"]("Whoo: Look Again");
-					}if(json.repeatNotifier){
+				
+					if(json.repeatNotifier)
 						toastr["info"]("Lets try it again");
-					}if(json.correctNotifier && json.ch!=9)
-					toastr["success"]("Bingo.. Its correct");
+					
+					if(json.correctNotifier && json.ch!=9)
+						toastr["success"]("Bingo.. Its correct");
+					
+					if(json.leftfactor)
+						toastr["success"]("Your uploaded GRAMMAR required left factoring. We present you a quiz for the left factored grammar.");
 
+
+					
 					$( "<div>").html( "<em><pre><h4><b>"+json.qcontent+"</b></h4></pre></em>" ).appendTo( "#section" );
+					if(json.ch==3 || json.ch==9 || json.ch==4 || json.ch==7){
 
-					if(json.ch==3 || json.ch==9 || json.ch==4){
-
-						if(json.ch==4){
+						if(json.ch==4 || json.ch==7){
 							printTable(json);
 							printStatictable(json);
 						}
@@ -337,8 +382,13 @@ $(document).ready(function(){
 							$("<div>").html("<h3><p><em>FOLLOW SET</em></p></h3>").appendTo("#naviright");
 							$("<div>").html("<pre>"+json.followSet+"</pre>").appendTo("#naviright");
 							*/
+						if(json.ch==6 || json.ch==7)
+						$('<div/>',{id:'accordion', 'class':'panel-group'}).append(' <div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseCanonical">Canonical Set</a></h4></div><div id="collapseCanonical" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.canSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFirst">First Set</a></h4></div><div id="collapseFirst" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.firstSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFollow">Follow Set</a></h4></div><div id="collapseFollow" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.followSet+'</pre></div></div></div>').appendTo("#naviright");
 
+						else	
 						$('<div/>',{id:'accordion', 'class':'panel-group'}).append(' <div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFirst">First Set</a></h4></div><div id="collapseFirst" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.firstSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFollow">Follow Set</a></h4></div><div id="collapseFollow" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.followSet+'</pre></div></div></div>').appendTo("#naviright");
+
+
 					}
 
 
@@ -371,7 +421,7 @@ $(document).ready(function(){
 
 
 					}	
-					if(json.state!=1 || (json.ch!=3 && json.ch!=9 && json.ch!=4))			
+					if(json.state!=1 || (json.ch!=3 && json.ch!=9 && json.ch!=4 && json.ch!=7))			
 						$("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Next</button>").click(function() {getCheckedlist(json);}).appendTo("#section");
 					else 
 						$("<div class=\"col-md-12\">").html("<button  type=\"submit\" class=\"btn btn-primary\" >Next</button>").click(function() {submitDraggedOptions(json);}).appendTo("#section");
@@ -400,6 +450,6 @@ $(document).ready(function(){
 
 		});
 	};
-	window.firstCall= function() {window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':'', 'state':'','sym':'', 'uname':getUname(), 'ch': window.ch, 'llcellstk':[], 'llcell':[], 'cellnoset':[], 'tableanswer':[], 'tablerow':'', 'tablecol':'', 'llparsinganswercounter':0, 'sizeitem':-1, 'sizestk':[], 'flag':0, 'rowstring':"",'inputstring':window.inputstring, 'multipopflag':0/*, 'userdefinedlltable':[]*/});}
+	window.firstCall= function() {window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':'', 'state':'','sym':'', 'uname':getFname(),'dname':getDname(), 'ch': window.ch, 'llcellstk':[], 'llcell':[], 'cellnoset':[], 'tableanswer':[], 'tablerow':'', 'tablecol':'', 'llparsinganswercounter':0, 'sizeitem':-1, 'sizestk':[], 'flag':0, 'rowstring':"",'inputstring':window.inputstring, 'multipopflag':0/*, 'userdefinedlltable':[]*/});}
 	firstCall();
 });

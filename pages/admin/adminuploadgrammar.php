@@ -5,6 +5,7 @@ if(isset($_SESSION['useadminfile']))
 {
 	$filename = $_SESSION['useadminfile'];
 $uploaddir=  '/home/mohitdb/myserver/output/admin/';
+
 }
 else {
 $tempFileName= $_FILES['grammar-upload']['tmp_name'];
@@ -12,7 +13,7 @@ $allowed = array('inode/x-empty', 'text/plain');
 //check file information/type
 $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
 if(!in_array(finfo_file($finfo, $tempFileName), $allowed)){
-	$_SESSION['Err']= "Please upload a plain text file !!";
+	$_POST['Err']= "\n Ohh !! Just TEXT.. Plain text allowed";
 	finfo_close($finfo);
 	header('location: tutorial.php');
 	exit();
@@ -44,13 +45,13 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
     <title>COMPILER TUTORIALS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../styles/bootstrap.min.css" rel="stylesheet">
-    <link href="../styles/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="../styles/theme.css" rel="stylesheet">    
-    <link href="../styles/questionstyle.css" rel="stylesheet">
-    <link href="../styles/toastr.min.css" rel="stylesheet">
-    <link href="../styles/tablestyle.css" rel="stylesheet">
-    <link href="../styles/statictable.css" rel="stylesheet">
+    <link href="/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="/styles/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/styles/theme.css" rel="stylesheet">    
+    <link href="/styles/questionstyle.css" rel="stylesheet">
+    <link href="/styles/toastr.min.css" rel="stylesheet">
+    <link href="/styles/tablestyle.css" rel="stylesheet">
+    <link href="/styles/statictable.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <!--link href="css/jumbotron.css" rel="stylesheet"-->
@@ -67,7 +68,7 @@ move_uploaded_file($_FILES['grammar-upload']['tmp_name'], $uploadfile);
   </head>
 
   <body>
-    <script src="../scripts/questionCall.js"></script>
+    <script src="/scripts/questionCall.js"></script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -95,7 +96,8 @@ echo "Welcome ".$name;?>
   </a>
 
   <ul class="dropdown-menu" aria-labelledby="dLabel">
-		    <!--li><a href="#">Profile</a></li-->
+		    <li><a href="profile.php">Profile</a></li>
+		    <li><a href="account.php">Account Manager</a></li>
 		    <li><a href="updatepass.php">Security</a></li>
 		    <li><a href="signout.php">Signout</a></li>
 
@@ -111,6 +113,7 @@ echo "Welcome ".$name;?>
 if(isset($_SESSION['useadminfile'])){
 	$grammar = file_get_contents($uploaddir.$filename);
 	$_SESSION['filename']= $_SESSION['useadminfile'];
+
 }
 else
 {
@@ -194,8 +197,8 @@ ob_end_clean();
 <li id="5"><a href="#">Play for SLR Canonical Set-CLOSURE</a></li>
 <li id="10"><a href="#">Play for SLR Canonical Set-GOTO</a></li>
 
-<li id="6" onclick="changeChoice(this.id)"><a href="#">Play for SLR Parsing Table</a></li>
-<li id="7" onclick="changeChoice(this.id)"><a href="#">Play for SLR Parsing Moves</a></li>
+<li id="6"><a href="#">Play for SLR Parsing Table</a></li>
+<li id="7"><a href="#">Play for SLR Parsing Moves</a></li>
 
 </ul>
 
@@ -208,7 +211,7 @@ ob_end_clean();
 
 <div class="col-md-6">
 <div id="section" style="background-color:WhiteSmoke; color:black; margin:20px; padding:20px;">
-<div id="loader" style="display:none;width:69px;height:89px;border:1px solid black;position:absolute;top:50%;left:50%;padding:2px;"><img src='../images/ajax-loader2.gif' width="64" height="64" /><br>Loading..</div>
+
 
 
 </div>

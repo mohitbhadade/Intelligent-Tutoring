@@ -1,5 +1,4 @@
 <?php
 session_start();
-echo $_FILES['upload-grammar']['name'];
+echo $_SESSION['filename'];
 ?>
-

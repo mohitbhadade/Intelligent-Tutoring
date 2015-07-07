@@ -11,13 +11,13 @@
     <link rel="icon" href="img/logo_black.png">
 
     <title>COMPILER TUTORIALS</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../styles/bootstrap.min.css" rel="stylesheet">
-    <link href="../styles/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="../styles/theme.css" rel="stylesheet">    
     <script src="/scripts/jquery-1.11.2.js"> </script>
-    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/bootstrap.min.js"> </script>
+    <script src="/scripts/filelist.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="/styles/bootstrap.min.css" rel="stylesheet">
+    <link href="/styles/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/styles/theme.css" rel="stylesheet">    
 
     <!-- Custom styles for this template -->
     <!--link href="css/jumbotron.css" rel="stylesheet"-->
@@ -39,21 +39,21 @@
       <div class="container">
 	<div class="navbar-header">
 	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+	    <span class="sr-only">Toggle navigation</span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
 	  </button>
 	  <!--a class="navbar-brand" href="tutorial.html">Welcome</a-->
 	  <a class="navbar-brand"><?php
-		echo "Welcome ".$name;?>
+echo "Welcome ".$name;?>
 	  </a>
 	</div>
 	<!-- Collect the nav links, forms, and other content for toggling -->
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	  <ul class="nav navbar-nav navbar-right">
-            <li><a href="homepage.php">Home</a></li>      
-            <li><a href="tutorial.php">Tutorial</a></li>
+	    <li><a href="index.php">Home</a></li>      
+	    <li><a href="tutorial.php">Tutorial</a></li>
 <li class="dropdown">
   <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
     Account
@@ -61,89 +61,118 @@
   </a>
 
   <ul class="dropdown-menu" aria-labelledby="dLabel">
-		    <!--li><a href="#">Profile</a></li-->
+		    <li><a href="profile.php">Profile</a></li>
+		    <li><a href="account.php">Account Manager</a></li>
 		    <li><a href="updatepass.php">Security</a></li>
 		    <li><a href="signout.php">Signout</a></li>
 
   </ul>
 </li>
 
-
 	  </ul>
 	</div><!-- /.navbar-collapse -->
       </div>
     </nav>
- 
+
 <div class="container">
   <div class="container">
     <div class="col-md-4 col-sm-offset-4 well">
+<div class="dropdown">
+  <a id="dLabel" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    Select User
+    <span class="caret"></span>
+  </a>
+
+  <ul class="dropdown-menu" aria-labelledby="dLabel">
+		    <!--li><a href="profile.php">Profile</a></li>
+		    <li><a href="account.php">Account Manager</a></li>
+		    <li><a href="updatepass.php">Security</a></li>
+		    <li><a href="signout.php">Signout</a></li-->
+
+<?php
+mysql_connect('localhost','root','mohitdb') or die (mysql_error());
+mysql_select_db('TUTORIAL_USERS') or die (mysql_error());
+$result = mysql_query("select user_name from login_credentials")or die(mysql_error());
+
+while ($row = mysql_fetch_assoc($result)) {
+	//if($row['user_name']!="admin")    
+		echo '<li id="'.$row['user_name'].'" onclick="showfilelist(this.id)"><a>'.$row['user_name'].'</a></li>';
+}	    
+?>
+
+
+  </ul>
+</div>
+<?php
+
+if(isset($_SESSION['glistdisplay']))
+{
+	echo '<h4> Grammar records for&nbsp'.$_SESSION['glistdisplay'].'</h4>';
+	$noentryflag=0;
+	$path="../../output/".$_SESSION['glistdisplay']; 
+	if(count(glob($path.'/*'))===0){
+		echo '<h6>No files uploaded or used till date</h6>';
+	}
+	else{
+		$list=  dir($path);	
+		$list->read();
+		$list->read();
+		echo '<ul>';
+		while(false !==($entry=$list->read()) ){
+			$noentryflag=1;
+			echo '<li>'.$entry.'</li>';
+			echo '<pre>'.file_get_contents($path.'/'.$entry).'</pre>';
+
+		}
+		echo '</ul>';
+		$list->close();
+	}
+	unset($_SESSION['glistdisplay']);
+}	
+?>
       <!--form id="grammar-input-form" action="question.php" method="POST" class="form-horizontal">
-        <div class="form-group">
-          <label for="grammar" class="col-md-4 control-label">Grammar&nbsp</label>
-          <div class="col-md-8">
+	<div class="form-group">
+	  <label for="grammar" class="col-md-4 control-label">Grammar&nbsp</label>
+	  <div class="col-md-8">
 	<textarea name="input-grammar" class="form-control" form="grammar-input-form" placeholder="Enter Grammar here.."></textarea>
 	</div>
 	</div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-	<h2><center>OR</center></h2-->
-      
-	<form enctype="multipart/form-data" action="upload-grammar.php" method="POST" class="form-horizontal">
-	<div class="form-group">
-	  <label for="upload" class="col-md-4 control-label">Upload File&nbsp</label>
-	  <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-          <input type="file"  name="grammar-upload" class="col-md-8">
-	  <p class="help-block col-md-8 col-md-offset-4">Allowed file types: <strong>.txt</strong></p>
-<?php  
-		if(isset($_SESSION['Err'])){
-			echo '<p style="color:red" class="help-block col-md-8 col-md-offset-4">'.$_SESSION['Err'].'</p>';
-			unset($_SESSION['Err']);
-		} 
-		if(isset($_GET['invalid'])){
-			echo '<p style="color:red" class="help-block col-md-8 col-md-offset-4">'.$_GET['invalid'].'</p>';
-			unset($_GET['invalid']);
-		} 
-
-?>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">Upload</button>
-        </div>
+	<div class="text-center">
+	  <button type="submit" class="btn btn-primary">Submit</button>
+	</div>
       </form>
 	<h2><center>OR</center></h2>
 
+	<form enctype="multipart/form-data" action="adminuploadgrammar.php" method="POST" class="form-horizontal">
+	<div class="form-group">
+	  <label for="upload" class="col-md-4 control-label">Upload File&nbsp</label>
+	  <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+	  <input type="file"  name="grammar-upload" class="col-md-8">
+	  <p class="help-block col-md-8 col-md-offset-4">Allowed file types: <strong>.txt</strong></p>
+	</div>
+	<div class="text-center">
+	  <button type="submit" class="btn btn-primary">Upload</button>
+	</div>
+      </form-->
 
-      <form id="admin-grammar-input-form" action="adminuploadfromlist.php" method="POST" class="form-horizontal">
-        <div class="form-group">
-          <label for="selectgrammar" class="col-md-4 control-label">Select Grammar &nbsp</label>
-          <div class="col-md-8">
+
+      <!--form id="admin-grammar-input-form" action="adminuploadfromlist.php" method="POST" class="form-horizontal">
+	<div class="form-group">
+	  <label for="selectgrammar" class="col-md-4 control-label">Select Grammar &nbsp</label>
+	  <div class="col-md-8">
 <select name="selectedfile">
-  <!--option value="volvo">admin 1</option>
-  <option value="admingrammar1.txt">admin< 2/option>
-  <option value="mercedes">admin 3</option>
-  <option value="audi">admin 4</option-->
-  <?php  
-		$list = dir("../output/admin");	
-		$list->read();
-		$list->read();	
-		$i=1;
-		while(false !==($entry=$list->read()) ){
-		echo '<option value="'.$entry.'">'.$entry.' - Admin File '.$i.'</option>';
-		$i++;	
-	}$list->close();	
-	//}
-	?>
-
+  <option value="volvo">Volvo</option>
+  <option value="admingrammar1.txt">admin</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
 </select>
 
 	</div>
 	</div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">Use</button>
-        </div>
-      </form>
+	<div class="text-center">
+	  <button type="submit" class="btn btn-primary">Use</button>
+	</div>
+      </form-->
 
 
     </div>
@@ -155,8 +184,8 @@
 	<p>Department of Computer Science and Engineering, IIT Kanpur</p>
       </footer>
     </div>
-    
-    
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -166,4 +195,5 @@
     <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
   </body>
 </html>
+
 

@@ -8,10 +8,16 @@
 	if($res) {
 		session_start();
 		$_SESSION['name']=$username;
+		if($username=="admin"){
+			$_SESSION['role']= $username;
+			header('location: admin/');
+		}
+		else
 		header('location: homepage.php');
 	}
 	else {
-		echo"<h1>Wrong username/pass</h1>";
+		$_POST['wrong_login']="Wrong Username";
+		header('location: index.php?wrong_login=Not a registered user');
 	}
 
 
