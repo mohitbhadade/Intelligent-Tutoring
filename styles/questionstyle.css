@@ -11,7 +11,8 @@
 	color:white;
 	height:750px;
 	margin:20px;
-	padding:20px;	      
+	padding:20px;
+	overflow: auto;
 }
 #naviright {
 	line-height:30px;
@@ -19,7 +20,8 @@
 	color:white;
 	height:750px;
 	margin:20px;
-	padding:20px;	      
+	padding:20px;
+	overflow: auto;
 
 }
 #section {

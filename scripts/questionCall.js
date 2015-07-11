@@ -21,23 +21,25 @@ function printTable(json){
 
 	var table = $('#tablediv').clone().show().appendTo("#section").find("#tablebody");
 	//		var arr= [["A","i12","1GB","0","0","0","0","0","0"],["B","20","100","0","0","0","0","0","0"],["C","30","40","0","0","0","0","0","0"]];
-	var arr= json.printedlltable;
+	
+	
+	var arr= json.printedlltable;	 
 	var row= $('<tr>');
+		var tempindex=[];
 	row.append($('<th>').html("<pre>Parsing\nTable</pre>"));	
 	if(json.keys)
 		for (i=0; i<json.keys.length; i++){
 			row.append($('<th>').html(json.keys[i]));
 		}
 	if(json.symbols){
-		var index=[];
 		for(var x in json.symbols)
-			index.push({'key':json.symbols[x],'value':x});
-		index.sort(function(a,b){
+			tempindex.push({'key':json.symbols[x],'value':x});
+		tempindex.sort(function(a,b){
 			return a['key']==b['key']?0 : (a['key']>b['key']? 1: -1);			
 		});
 		
-		for (i=0; i<index.length; i++){
-			row.append($('<th>').html(index[i].value));
+		for (i=0; i<tempindex.length; i++){
+			row.append($('<th>').html(tempindex[i].value));
 		}
 
 	}
@@ -53,9 +55,12 @@ function printTable(json){
 					index=k;
 			}
 
-
-
-		var row=$('<tr>');
+		if(json.symbols)
+			for(k=0;k<tempindex.length;k++)
+				if(json.tablecol == tempindex[k].value)
+					index= k;
+	
+		var row=$('<tr class="table1">');
 		var rowhead = $('<th>');
 		rowhead.html(i);
 		row.append(rowhead);		
@@ -65,13 +70,13 @@ function printTable(json){
 				if(j==index && i==json.tablerow)
 					row.append($('<td class=\'thigh\' ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">').html(""));
 				else
-					row.append($('<td>').html(""));
+					row.append($('<td class="table1">').html(""));
 
 			else
 				if(json.ch==3 || json.ch==4 || json.ch==9)
-				row.append($('<td>').html(i+" -> "+rowdata[j]));
+				row.append($('<td class="table1">').html(i+" -> "+rowdata[j]));
 				else
-				row.append($('<td>').html(rowdata[j]));
+				row.append($('<td class="table1">').html(rowdata[j]));
 
 
 		}
@@ -85,7 +90,8 @@ function printStatictable(json){
 	if(json.ch==9){
 		if(json.llparsinganswercounter==4){
 			var statictable = $('#statictablediv').clone().show().appendTo("#section").find('#statictablebody');
-			var arr1= [["Obj1","Obj2","3"],["Obj3","obj4","3"],["Obj3","Obj4","4"]];
+	//		var arr1= [["Obj1","Obj2","3"],["Obj3","obj4","3"],["Obj3","Obj4","4"]];
+			var arr1= json.llparsingmoves;
 			var row1= $('<tr>');
 
 			var headarr=["Stack","Input String","Output"];
@@ -135,7 +141,7 @@ function printStatictable(json){
 		if(json.ch==4)
 			headarr=["Stack","Input String","Output"];
 		else
-			headarr=["stack","Input String"];
+			headarr=["Stack","Input String"];
 		for(i in headarr)
 			row1.append($('<th class=\"statictable\" class=\"text-left\">').html(headarr[i]));	
 
@@ -208,16 +214,15 @@ function submitDraggedOptions(json){
 			highlightedCells.each(function(i,elem) {
 				window.rowstring += document.getElementById(elem.childNodes[0].childNodes[0].id).value + "  ";
 			});
-
 			window.rowstring= $.trim(window.rowstring);
-			var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk/*,'userdefinedlltable':json.userdefinedlltable*/};
+			var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'slrcellstk':json.slrcellstk,'slrcell':json.slrcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk,'currentmove':json.currentmove,'userdefinedlltable':json.userdefinedlltable};
 			window.rowstring="";
 			getQuestion(returnjson);
 		}
 	}
 	else{
 
-		var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk/*,'userdefinedlltable':json.userdefinedlltable*/};
+		var returnjson = {'questionReturned': json.qcontent, 'useranswer':[], 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname,'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell,'slrcellstk':json.slrcellstk,'slrcell':json.slrcell, 'cellnoset':json.cellnoset, 'tableanswer':window.temp,'tablerow':json.tablerow, 'tablecol':json.tablecol, 'llparsinganswercounter': tempcount,'sizeitem':json.sizeitem, 'sizestk':json.sizestk,'flag':json.flag,'inputstring':json.inputstring, 'rowstring':window.rowstring, 'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk,'currentmove':json.currentmove,'userdefinedlltable':json.userdefinedlltable};
 		getQuestion(returnjson);
 
 	}
@@ -244,6 +249,7 @@ function drop(ev) {
 		selectedOptions += elem.childElementCount;
 	});
 	window.rowstringcount = selectedOptions;
+
 	window.temp[0]= inputdata[0].value;
 
 }
@@ -290,7 +296,7 @@ function getCheckedlist(json){
 			temp[j++] = document.getElementById(cur_id).value;
 
 	}	
-	var returnjson = {'questionReturned': json.qcontent, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname, 'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'cellnoset':json.cellnoset,'tableanswer':[],'tablerow':json.tablerow, 'tablecol':json.tablecol,'inputstring':json.inputstring,'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk};
+	var returnjson = {'questionReturned': json.qcontent, 'useranswer':temp, 'nonterminals':json.nonterminals, 'incorrect':json.incorrect, 'correct':json.correct, 'wrong':json.wrong, 'right': json.right,'state': json.state,'sym':json.sym, 'uname':json.uname, 'dname':json.dname, 'ch':json.ch,'llcellstk':json.llcellstk, 'llcell':json.llcell, 'slrcellstk':json.slrcellstk,'slrcell':json.slrcell, 'cellnoset':json.cellnoset,'tableanswer':[],'tablerow':json.tablerow, 'tablecol':json.tablecol,'inputstring':json.inputstring,'movesstk':json.movesstk,'nextmove':json.nextmove,'nextmoveindex':json.nextmoveindex, 'multipopflag':json.multipopflag,'movesoptions':json.movesoptions,'permanentMovesstk':window.permanentMovesstk,'currentmove':json.currentmove,'userdefinedlltable':json.userdefinedlltable};
 	getQuestion(returnjson);
 
 }
@@ -360,7 +366,7 @@ $(document).ready(function(){
 
 					
 					$( "<div>").html( "<em><pre><h4><b>"+json.qcontent+"</b></h4></pre></em>" ).appendTo( "#section" );
-					if(json.ch==3 || json.ch==9 || json.ch==4 || json.ch==7){
+					if(json.ch==3 || json.ch==6 || json.ch==9 || json.ch==4 || json.ch==7){
 
 						if(json.ch==4 || json.ch==7){
 							printTable(json);
@@ -371,7 +377,7 @@ $(document).ready(function(){
 							printTable(json);
 
 						}
-						else if(json.ch==3)
+						else if(json.ch==3 || json.ch==6)
 							printTable(json);
 						
 
@@ -383,7 +389,7 @@ $(document).ready(function(){
 							$("<div>").html("<pre>"+json.followSet+"</pre>").appendTo("#naviright");
 							*/
 						if(json.ch==6 || json.ch==7)
-						$('<div/>',{id:'accordion', 'class':'panel-group'}).append(' <div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseCanonical">Canonical Set</a></h4></div><div id="collapseCanonical" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.canSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFirst">First Set</a></h4></div><div id="collapseFirst" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.firstSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFollow">Follow Set</a></h4></div><div id="collapseFollow" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.followSet+'</pre></div></div></div>').appendTo("#naviright");
+						$('<div/>',{id:'accordion', 'class':'panel-group'}).append(' <div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapsehintGrammar">Hint Grammar </a></h4></div><div id="collapsehintGrammar" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.hintGrammar+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseCanonical">Canonical Set</a></h4></div><div id="collapseCanonical" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.canSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFirst">First Set</a></h4></div><div id="collapseFirst" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.firstSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFollow">Follow Set</a></h4></div><div id="collapseFollow" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.followSet+'</pre></div></div></div>').appendTo("#naviright");
 
 						else	
 						$('<div/>',{id:'accordion', 'class':'panel-group'}).append(' <div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFirst">First Set</a></h4></div><div id="collapseFirst" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.firstSet+'</pre></div></div></div><div class=\"panel panel-info\"><div class=\"panel-heading\"><h4 class\"panel-title\"> <a data-toggle=\"collapse\" data-parent=\"#accordion\" href="#collapseFollow">Follow Set</a></h4></div><div id="collapseFollow" class=\"panel-collapse collapse\"><div class=\"panel-body\" style=\"color:black\"><pre>'+json.followSet+'</pre></div></div></div>').appendTo("#naviright");
@@ -421,8 +427,8 @@ $(document).ready(function(){
 
 
 					}	
-					if(json.state!=1 || (json.ch!=3 && json.ch!=9 && json.ch!=4 && json.ch!=7))			
-						$("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Next</button>").click(function() {getCheckedlist(json);}).appendTo("#section");
+					if(json.state!=1 || (json.ch!=3 && json.ch!=6 && json.ch!=9 && json.ch!=4 && json.ch!=7))			
+						$("<div>").html("<button type=\"submit\" class=\"btn btn-primary\" >Next1</button>").click(function() {getCheckedlist(json);}).appendTo("#section");
 					else 
 						$("<div class=\"col-md-12\">").html("<button  type=\"submit\" class=\"btn btn-primary\" >Next</button>").click(function() {submitDraggedOptions(json);}).appendTo("#section");
 
@@ -450,6 +456,6 @@ $(document).ready(function(){
 
 		});
 	};
-	window.firstCall= function() {window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':'', 'state':'','sym':'', 'uname':getFname(),'dname':getDname(), 'ch': window.ch, 'llcellstk':[], 'llcell':[], 'cellnoset':[], 'tableanswer':[], 'tablerow':'', 'tablecol':'', 'llparsinganswercounter':0, 'sizeitem':-1, 'sizestk':[], 'flag':0, 'rowstring':"",'inputstring':window.inputstring, 'multipopflag':0/*, 'userdefinedlltable':[]*/});}
+	window.firstCall= function() {window.getQuestion({'questionReturned':'', 'useranswer':[], 'nonterminals':[],'incorrect':[], 'correct':[],'wrong':'', 'right':'', 'state':'','sym':'', 'uname':getFname(),'dname':getDname(), 'ch': window.ch, 'llcellstk':[], 'llcell':[],'slrcellstk':[],'slrcell':[], 'cellnoset':[], 'tableanswer':[], 'tablerow':'', 'tablecol':'', 'llparsinganswercounter':0, 'sizeitem':-1, 'sizestk':[], 'flag':0, 'rowstring':"",'inputstring':window.inputstring, 'multipopflag':0,'currentmove':''});}
 	firstCall();
 });

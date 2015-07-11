@@ -8,6 +8,7 @@ include("session_check.php");
 	header('location: index.php');
 	if(!strcmp($username,"admin")){
 		$query = mysql_query("insert into login_credentials values('".$_POST['add-username']."','".$_POST['add-password']."')") or die(mysql_error());
+	$_SESSION['addsuccess']="Added Successfully";	
 	}
 	header('location: account.php');
 ?>

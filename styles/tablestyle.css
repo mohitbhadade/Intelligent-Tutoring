@@ -78,6 +78,12 @@ table.table1{
 .table1 tfoot th{
     color:#666;
 }
+tr.table1:hover td {
+  background:#848484;/*#A5A5A9;#605660;#261726;#4E5066;*/
+  color:#FFFFFF;
+  border-top: 1px solid #22262e;
+  border-bottom: 1px solid #22262e;
+}
 .table1 tbody td{
     padding:5px;
     text-align:center;
@@ -89,6 +95,7 @@ table.table1{
     color:#666;
     text-shadow:1px 1px 1px #fff;
 }
+
 .table1 tbody span.check::before{
     content : url(../images/check0.png)
 }

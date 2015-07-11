@@ -104,6 +104,14 @@ echo "Welcome ".$name;?>
 	<div class="text-center">
 	  <button type="submit" class="btn btn-primary">Add Student</button>
 	</div>
+<?php
+if(isset($_SESSION['addsuccess']))
+{
+	echo '<p class="text-center" style="color:green">'.$_SESSION['addsuccess'].'</p>';
+	unset($_SESSION['addsuccess']);
+}
+
+?>
       </form>
 <div class="col-md-12">
 <hr/>
@@ -118,6 +126,14 @@ echo "Welcome ".$name;?>
 	<div class="text-center">
 	  <button type="submit" class="btn btn-primary">Remove Student</button>
 	</div>
+<?php
+if(isset($_SESSION['removesuccess']))
+{
+	echo '<p class="text-center" style="color:orange">'.$_SESSION['removesuccess'].'</p>';
+	unset($_SESSION['removesuccess']);
+}
+
+?>
       </form>
 
 

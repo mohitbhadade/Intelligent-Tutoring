@@ -194,8 +194,8 @@ ob_end_clean();
 <li id="5"><a href="#">Play for SLR Canonical Set-CLOSURE</a></li>
 <li id="10"><a href="#">Play for SLR Canonical Set-GOTO</a></li>
 
-<li id="6" onclick="changeChoice(this.id)"><a href="#">Play for SLR Parsing Table</a></li>
-<li id="7" onclick="changeChoice(this.id)"><a href="#">Play for SLR Parsing Moves</a></li>
+<li id="6" onclick="changeChoice(this.id)"><a style="color:powderBlue" href="#">Play for SLR Parsing Table</a></li>
+<li id="7" onclick="changeChoice(this.id)"><a style="color:PowderBlue" href="#">Play for SLR Parsing Moves</a></li>
 
 </ul>
 
